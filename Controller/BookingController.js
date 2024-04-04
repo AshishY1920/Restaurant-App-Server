@@ -1,6 +1,7 @@
 const BookingModel = require('../Model/BookingModel');
 const RestaurantModel = require('../Model/RestaurantModel');
 const {uploadImage} = require('./RestaurantController');
+const moment = require('moment');
 
 exports.createBooking = async (req, res) => {
   try {
@@ -86,13 +87,10 @@ exports.getTodayBookings = async (req, res) => {
     const Islimit = limit ? parseInt(limit) : 5;
     const skip = page ? (parseInt(page) - 1) * Islimit : 0;
 
-    const date = new Date(); // Get current date
-    const formattedDate = `${date.getFullYear()}/${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+    const todayDate = moment().format('YYYY/MM/DD'); // Get current date
 
     const Bookings = await BookingModel.find({
-      Bookingdate: formattedDate,
+      Bookingdate: todayDate,
     })
       .sort({createdAt: -1})
       .limit(Islimit)
@@ -100,7 +98,7 @@ exports.getTodayBookings = async (req, res) => {
 
     // counting Total Documents
     const totalBookings = await BookingModel.countDocuments({
-      Bookingdate: formattedDate,
+      Bookingdate: todayDate,
     });
 
     // counting Total Pages

@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary');
 const RestaurantModel = require('../Model/RestaurantModel');
+const moment = require('moment');
 
 // Image Uploader
 exports.uploadImage = async image => {
@@ -99,19 +100,13 @@ exports.getRestaurantById = async (req, res) => {
   try {
     const {id, date} = req.query;
 
-    const defaultDate = new Date(); // Get current date
-    const DefaultformattedDate = `${defaultDate.getFullYear()}/${(
-      defaultDate.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0')}/${defaultDate.getDate().toString().padStart(2, '0')}`;
-
+    const defaultDate = moment().format('YYYY/MM/DD'); // Get current date
     const Restaurant = await RestaurantModel.findById(id)
       .select('bookings')
       .populate({
         path: 'bookings',
         match: {
-          Bookingdate: date || DefaultformattedDate,
+          Bookingdate: date || defaultDate,
         },
       });
 
