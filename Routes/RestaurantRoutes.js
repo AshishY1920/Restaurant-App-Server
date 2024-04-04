@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.route('/create-restaurant').post(createRestaurant);
 router.route('/get-restaurant').get(getRestaurant);
-router.route('/get-restaurant/:id').post(getRestaurantById);
+router.route('/show-restaurant').get(getRestaurantById);
 router.route('/create-booking/:id').post(createBooking);
 router.route('/get-all-booking').get(getAllBookings);
 router.route('/get-today-booking').get(getTodayBookings);

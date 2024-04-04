@@ -97,8 +97,8 @@ exports.getRestaurant = async (req, res) => {
 // get Restaurant By Id
 exports.getRestaurantById = async (req, res) => {
   try {
-    const {date} = req.body;
-    const Restaurant = await RestaurantModel.findById(req.params.id)
+    const {id, date} = req.query;
+    const Restaurant = await RestaurantModel.findById(id)
       .select('bookings')
       .populate({
         path: 'bookings',
