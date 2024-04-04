@@ -98,12 +98,20 @@ exports.getRestaurant = async (req, res) => {
 exports.getRestaurantById = async (req, res) => {
   try {
     const {id, date} = req.query;
+
+    const defaultDate = new Date(); // Get current date
+    const DefaultformattedDate = `${defaultDate.getFullYear()}/${(
+      defaultDate.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, '0')}/${defaultDate.getDate().toString().padStart(2, '0')}`;
+
     const Restaurant = await RestaurantModel.findById(id)
       .select('bookings')
       .populate({
         path: 'bookings',
         match: {
-          Bookingdate: date,
+          Bookingdate: date || DefaultformattedDate,
         },
       });
 
