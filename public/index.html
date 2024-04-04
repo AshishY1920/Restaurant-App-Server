@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <title>Table Booking App Api</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+
+      .grid-row {
+        display: grid;
+        grid-template-columns: 0.7fr 4fr;
+        gap: 10px;
+        background-color: #f7f7f7;
+        max-width: fit-content;
+        margin: 20px 20px 20px 20px;
+      }
+
+      .grid-row > div:nth-child(1) {
+        background-color: #416d19;
+        font-family: 'Montserrat', sans-serif;
+        padding: 2px 5px;
+        border-radius: 2px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .grid-row > div:nth-child(2) {
+        padding: 2px 20px 2px 10px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-row">
+      <div>POST</div>
+      <div>
+        https://restaurant-table-booking-app-server.vercel.app/api/v1/create-restaurant
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div style="background-color: #ee4266">GET</div>
+      <div>
+        https://restaurant-table-booking-app-server.vercel.app/api/v1/get-restaurant
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div style="background-color: #ee4266">GET</div>
+      <div>
+        https://restaurant-table-booking-app-server.vercel.app/api/v1/get-restaurant/:id
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div>POST</div>
+      <div>
+        https://restaurant-table-booking-app-server.vercel.app/api/v1/create-booking/:id
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div style="background-color: #ee4266">GET</div>
+      <div>
+        https://restaurant-table-booking-app-server.vercel.app/api/v1/get-all-booking
+      </div>
+    </div>
+  </body>
+</html>
