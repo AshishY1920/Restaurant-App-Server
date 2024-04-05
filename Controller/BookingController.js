@@ -9,14 +9,21 @@ exports.createBooking = async (req, res) => {
     const {RestaurantName, image, price, Bookingdate, Bookingtime, Seat} =
       req.body;
 
-    const IsExists = await BookingModel.findOne({Seat: {$in: Seat}});
+    // const IsExists = await BookingModel.findOne({Seat: {$in: Seat}});
 
-    if (IsExists) {
+    if (!Restaurant) {
       return res.status(400).json({
         status: 0,
-        message: 'The Selected Table Is Currently UnAvailable...',
+        message: 'No Restaurant Found',
       });
     }
+
+    // if (IsExists) {
+    //   return res.status(400).json({
+    //     status: 0,
+    //     message: 'The Selected Table Is Currently UnAvailable...',
+    //   });
+    // }
 
     const result = await uploadImage(image);
 
