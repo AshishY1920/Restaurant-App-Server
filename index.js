@@ -7,6 +7,7 @@ const PORT = 3000 || process.env.PORT;
 const dotenv = require('dotenv');
 const connection = require('./DBConnection/Connection');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 app.use(
   express.json({
@@ -36,6 +37,8 @@ cloudinary.config({
 });
 
 module.exports = cloudinary;
+
+app.use(fileUpload());
 
 // app.get('/', (req, res) => res.send('Express on Vercel'));
 

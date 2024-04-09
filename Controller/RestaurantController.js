@@ -15,13 +15,16 @@ exports.uploadImage = async image => {
 // Create Restaurant
 exports.createRestaurant = async (req, res) => {
   try {
-    const {RestaurantName, image, description, address} = req.body;
+    const {RestaurantName, description, address} = req.body;
 
-    const result = await this.uploadImage(image);
+    const result = await cloudinary.v2.uploader.upload(req.body.image);
 
     const Restaurant = new RestaurantModel({
       RestaurantName,
-      image: result,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
       description,
       address,
     });
