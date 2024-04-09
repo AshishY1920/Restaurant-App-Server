@@ -3,6 +3,7 @@ const RestaurantModel = require('../Model/RestaurantModel');
 const {uploadImage} = require('./RestaurantController');
 const moment = require('moment');
 
+// Create Booking
 exports.createBooking = async (req, res) => {
   try {
     const Restaurant = await RestaurantModel.findById(req.params.id);
@@ -54,6 +55,7 @@ exports.createBooking = async (req, res) => {
   }
 };
 
+// Get All Bookings
 exports.getAllBookings = async (req, res) => {
   try {
     const {page, limit} = req.query;
@@ -88,6 +90,7 @@ exports.getAllBookings = async (req, res) => {
   }
 };
 
+// Get Today's Booking
 exports.getTodayBookings = async (req, res) => {
   try {
     const {page, limit} = req.query;
@@ -129,6 +132,7 @@ exports.getTodayBookings = async (req, res) => {
   }
 };
 
+// Cancel Booking
 exports.CancelledBooking = async (req, res) => {
   try {
     const {status} = req.body;
@@ -168,6 +172,7 @@ exports.CancelledBooking = async (req, res) => {
   }
 };
 
+// Get Cancelled Bookings
 exports.getCancelledBookings = async (req, res) => {
   try {
     const {page, limit} = req.query;

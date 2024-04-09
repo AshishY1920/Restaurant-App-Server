@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary');
 const RestaurantModel = require('../Model/RestaurantModel');
 const moment = require('moment');
+const BookingModel = require('../Model/BookingModel');
 
 // Image Uploader
 exports.uploadImage = async image => {
@@ -123,6 +124,46 @@ exports.getRestaurantById = async (req, res) => {
     return res.status(200).json({
       status: 1,
       data: Restaurant,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: 0,
+      message: error.message,
+    });
+  }
+};
+
+// get Metrics counts
+exports.getDashboardCounts = async (req, res) => {
+  try {
+    let todayDate = moment().format('YYYY/MM/DD');
+    const restaurantCount = await RestaurantModel.countDocuments({});
+    const AllBookingsCount = await BookingModel.countDocuments({});
+    const CancelledBookingCounts = await BookingModel.countDocuments({
+      status: 'Cancelled',
+    });
+
+    const TodaysBookingCounts = await BookingModel.countDocuments({
+      Bookingdate: todayDate,
+    });
+
+    return res.status(200).json({
+      status: 1,
+      message: 'Metrics Count Fetched Successfully',
+      metrics_counts: {
+        total_restaurant: restaurantCount,
+        total_bookings: AllBookingsCount,
+        cancelled_booking: CancelledBookingCounts,
+        today_booking: TodaysBookingCounts,
+      },
+      chart_counts_restaurant: {
+        total_restaurant: restaurantCount,
+      },
+      chart_counts_bookings: {
+        total_bookings: AllBookingsCount,
+        cancelled_booking: CancelledBookingCounts,
+        today_booking: TodaysBookingCounts,
+      },
     });
   } catch (error) {
     return res.status(500).json({
