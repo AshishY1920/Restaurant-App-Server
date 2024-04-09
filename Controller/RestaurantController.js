@@ -5,8 +5,8 @@ const moment = require('moment');
 // Image Uploader
 exports.uploadImage = async image => {
   try {
-    const result = await cloudinary.uploader.upload(image);
-    return result.secure_url;
+    const result = await cloudinary.v2.uploader.upload(image);
+    return result;
   } catch (error) {
     throw new Error('Image upload failed');
   }
@@ -17,7 +17,7 @@ exports.createRestaurant = async (req, res) => {
   try {
     const {RestaurantName, description, address} = req.body;
 
-    const result = await cloudinary.v2.uploader.upload(req.body.image);
+    const result = await this.uploadImage(req.body.image);
 
     const Restaurant = new RestaurantModel({
       RestaurantName,
