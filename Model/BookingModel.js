@@ -6,7 +6,8 @@ const BookingModel = new mongoose.Schema(
       type: String,
     },
     image: {
-      type: String,
+      public_id: String,
+      url: String,
     },
     price: {
       type: Number,
