@@ -21,6 +21,9 @@ const BookingModel = new mongoose.Schema(
     Seat: {
       type: [String],
     },
+    CancelledSeats: {
+      type: [String],
+    },
     status: {
       type: String,
       enum: ['Booked', 'Cancelled'],

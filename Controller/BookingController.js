@@ -153,6 +153,10 @@ exports.CancelledBooking = async (req, res) => {
       });
     }
 
+    CheckIsCancelled.CancelledSeats = CheckIsCancelled.Seat;
+
+    await CheckIsCancelled.save();
+
     const Booking = await BookingModel.findByIdAndUpdate(
       req.params.id,
       {status, $unset: {Seat: ''}},
