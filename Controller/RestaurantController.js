@@ -76,7 +76,9 @@ exports.getRestaurant = async (req, res) => {
       .skip(skip);
 
     // count Total Restaurant Documents
-    const totalRestaurant = await RestaurantModel.countDocuments({});
+    const totalRestaurant = await RestaurantModel.countDocuments(
+      query ? query : {},
+    );
 
     // count Total page
     const totalPages = Math.ceil(totalRestaurant / Islimit);
