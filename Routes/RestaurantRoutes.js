@@ -10,6 +10,10 @@ const {getRestaurantById} = require('../Controller/RestaurantController');
 const {getTodayBookings} = require('../Controller/BookingController');
 const {CancelledBooking} = require('../Controller/BookingController');
 const {getCancelledBookings} = require('../Controller/BookingController');
+const {
+  createSeat,
+  getSeatsByRestaurants,
+} = require('../Controller/SeatsController');
 const router = express.Router();
 
 // Restaurant Routes
@@ -29,5 +33,10 @@ router.route('/get-cancel-booking').get(getCancelledBookings);
 // Dashboard Metrics Counts
 router.route('/get-dashboard-metrics-counts').get(getDashboardCounts);
 // Dashboard Metrics Counts
+
+// Seats Routes
+router.route('/create-seats/:id').post(createSeat);
+router.route('/get-seats/:id').get(getSeatsByRestaurants);
+// Seats Routes
 
 module.exports = router;
