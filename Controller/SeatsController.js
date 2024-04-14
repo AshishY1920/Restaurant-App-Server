@@ -16,15 +16,19 @@ exports.createSeat = async (req, res) => {
 
     // checking if Seats Array Includes the value which is sending the user
     const existingSeats = await SeatsModel.find({
-      seats: {$elemMatch: {$in: seats}},
+      'seats.seat': {$in: seats.map(seat => seat.seat)},
+      // seats: {$elemMatch: {$in: seats}},
       owner: Restaurant._id,
     });
 
     if (existingSeats.length > 0) {
-      let exists = existingSeats.map(seat => seat.seats.join(', '));
+      // let exists = existingSeats.seats.map(seat => seat.seats.join(', '));
+      const existingSeatNumbers = existingSeats
+        .map(seat => seat.seats.map(s => s.seat))
+        .flat();
       return res.status(400).json({
         status: 0,
-        message: `One or more seats already exist in the restaurant ${exists.toString()}`,
+        message: `One or more seats already exist in the restaurant ${existingSeatNumbers}`,
       });
     }
 
