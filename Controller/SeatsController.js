@@ -63,10 +63,12 @@ exports.getSeatsByRestaurants = async (req, res) => {
       '-_id -seats._id -owner -createdAt -updatedAt',
     );
 
+    const allSeats = seats.reduce((acc, curr) => acc.concat(curr.seats), []);
+
     return res.status(200).json({
       status: 1,
       message: 'Seats Retrieved Successfully',
-      data: seats,
+      data: allSeats,
     });
   } catch (error) {
     return res.status(500).json({
