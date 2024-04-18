@@ -58,19 +58,15 @@ exports.createSeat = async (req, res) => {
 // Get Seats By Restaurant Id
 exports.getSeatsByRestaurants = async (req, res) => {
   try {
-    // Populating the seats field only / & excluding the unrequired fields
-    const Restaurant = await RestaurantModel.findById(req.params.id)
-      .select('seats')
-      .populate({
-        path: 'seats',
-        select: '-owner -updatedAt -createdAt -_id -seats._id',
-      })
-      .sort({createdAt: -1});
+    const restaurant = await RestaurantModel.findById(req.params.id);
+    const seats = await SeatsModel.find({owner: restaurant._id}).select(
+      '-_id -seats._id -owner -createdAt -updatedAt',
+    );
 
     return res.status(200).json({
       status: 1,
       message: 'Seats Retrieved Successfully',
-      data: Restaurant.seats,
+      data: seats,
     });
   } catch (error) {
     return res.status(500).json({
