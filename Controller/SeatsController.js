@@ -63,14 +63,14 @@ exports.getSeatsByRestaurants = async (req, res) => {
       .select('seats')
       .populate({
         path: 'seats',
-        select: '-owner -updatedAt -createdAt',
+        select: '-owner -updatedAt -createdAt -_id -seats._id',
       })
       .sort({createdAt: -1});
 
     return res.status(200).json({
       status: 1,
       message: 'Seats Retrieved Successfully',
-      data: Restaurant,
+      data: Restaurant.seats,
     });
   } catch (error) {
     return res.status(500).json({
