@@ -21,12 +21,6 @@ const RestaurantModel = new mongoose.Schema(
         ref: 'Booking',
       },
     ],
-    seats: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Seats',
-      },
-    ],
   },
   {
     timestamps: true,

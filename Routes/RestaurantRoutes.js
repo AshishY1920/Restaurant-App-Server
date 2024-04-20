@@ -3,6 +3,8 @@ const {
   createRestaurant,
   getRestaurant,
   getDashboardCounts,
+  updateRestaurantById,
+  deleteRestaurantById,
 } = require('../Controller/RestaurantController');
 const {createBooking} = require('../Controller/BookingController');
 const {getAllBookings} = require('../Controller/BookingController');
@@ -13,6 +15,7 @@ const {getCancelledBookings} = require('../Controller/BookingController');
 const {
   createSeat,
   getSeatsByRestaurants,
+  deleteSeatsByObjectId,
 } = require('../Controller/SeatsController');
 const router = express.Router();
 
@@ -20,6 +23,8 @@ const router = express.Router();
 router.route('/create-restaurant').post(createRestaurant);
 router.route('/get-restaurant').get(getRestaurant);
 router.route('/show-restaurant').get(getRestaurantById);
+router.route('/update-restaurant/:id').put(updateRestaurantById);
+router.route('/delete-restaurant/:id').delete(deleteRestaurantById);
 // Restaurant Routes
 
 // Bookings Routes
@@ -37,6 +42,7 @@ router.route('/get-dashboard-metrics-counts').get(getDashboardCounts);
 // Seats Routes
 router.route('/create-seats/:id').post(createSeat);
 router.route('/get-seats/:id').get(getSeatsByRestaurants);
+router.route('/update-seats/:id').delete(deleteSeatsByObjectId);
 // Seats Routes
 
 module.exports = router;

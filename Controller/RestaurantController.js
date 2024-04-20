@@ -2,11 +2,14 @@ const cloudinary = require('cloudinary');
 const RestaurantModel = require('../Model/RestaurantModel');
 const moment = require('moment');
 const BookingModel = require('../Model/BookingModel');
+const SeatsModel = require('../Model/SeatsModel');
 
 // Image Uploader
 exports.uploadImage = async image => {
   try {
-    const result = await cloudinary.v2.uploader.upload(image);
+    const result = await cloudinary.v2.uploader.upload(image, {
+      folder: 'TableBookingApp',
+    });
     return result;
   } catch (error) {
     throw new Error('Image upload failed');
@@ -166,6 +169,80 @@ exports.getDashboardCounts = async (req, res) => {
         cancelled_booking: CancelledBookingCounts,
         today_booking: TodaysBookingCounts,
       },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: 0,
+      message: error.message,
+    });
+  }
+};
+
+// Update Restaurant By Id
+exports.updateRestaurantById = async (req, res) => {
+  try {
+    const {RestaurantName, description, address, image} = req.body;
+    const restaurant = await RestaurantModel.findById(req.params.id);
+
+    if (!restaurant) {
+      return res.status(404).json({
+        status: 0,
+        message: 'Invalid Restaurant Id',
+      });
+    }
+
+    if (RestaurantName) restaurant.RestaurantName = RestaurantName;
+    if (description) restaurant.description = description;
+    if (address) restaurant.address = address;
+    if (image) {
+      // deleting Previous Image
+      const [newImage] = await Promise.all([
+        cloudinary.v2.uploader.destroy(restaurant.image.public_id),
+        this.uploadImage(image),
+      ]);
+
+      restaurant.image = {
+        public_id: newImage.public_id,
+        url: newImage.secure_url,
+      };
+    }
+
+    await restaurant.save();
+
+    return res.status(200).json({
+      status: 1,
+      message: 'Restaurant Updated Successfully',
+      data: restaurant,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: 0,
+      message: error.message,
+    });
+  }
+};
+
+// Delete Restaurant By Id
+exports.deleteRestaurantById = async (req, res) => {
+  try {
+    const restaurant = await RestaurantModel.findById(req.params.id);
+
+    if (!restaurant) {
+      return res.status(200).json({
+        status: 0,
+        message: 'Invalid Restaurant Id',
+      });
+    }
+
+    const [] = await Promise.all([
+      SeatsModel.deleteMany({owner: restaurant._id}),
+      BookingModel.deleteMany({owner: restaurant._id}),
+      restaurant.deleteOne(),
+    ]);
+
+    return res.status(200).json({
+      status: 1,
+      message: 'Restaurant All Data Asscociated With It, Deleted Successfully',
     });
   } catch (error) {
     return res.status(500).json({
