@@ -30,7 +30,7 @@ exports.createBooking = async (req, res) => {
 
     const Booking = new BookingModel({
       RestaurantName,
-      image: result,
+      image: result.secure_url,
       price,
       Bookingdate,
       Bookingtime,
