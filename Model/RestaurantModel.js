@@ -5,6 +5,9 @@ const RestaurantModel = new mongoose.Schema(
     RestaurantName: {
       type: String,
     },
+    categories: {
+      type: String,
+    },
     image: {
       public_id: String,
       url: String,

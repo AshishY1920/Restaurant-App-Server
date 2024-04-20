@@ -19,7 +19,7 @@ exports.uploadImage = async image => {
 // Create Restaurant
 exports.createRestaurant = async (req, res) => {
   try {
-    const {RestaurantName, description, address} = req.body;
+    const {RestaurantName, description, address, categories} = req.body;
 
     const result = await this.uploadImage(req.body.image);
 
@@ -31,6 +31,7 @@ exports.createRestaurant = async (req, res) => {
       },
       description,
       address,
+      categories,
     });
 
     await Restaurant.save();
@@ -243,6 +244,34 @@ exports.deleteRestaurantById = async (req, res) => {
     return res.status(200).json({
       status: 1,
       message: 'Restaurant All Data Asscociated With It, Deleted Successfully',
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: 0,
+      message: error.message,
+    });
+  }
+};
+
+// Get All Unique Categories
+exports.getAllCategores = async (req, res) => {
+  try {
+    const categories = await RestaurantModel.aggregate([
+      {$match: {categories: {$ne: null}}},
+      {$group: {_id: '$categories', image: {$first: '$image'}}},
+    ]);
+
+    if (!categories) {
+      return res.status(400).json({
+        status: 0,
+        message: 'No Categories Found',
+      });
+    }
+
+    return res.status(200).json({
+      status: 1,
+      message: 'Categories Retrieved Successfully',
+      data: categories,
     });
   } catch (error) {
     return res.status(500).json({
