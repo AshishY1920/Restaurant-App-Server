@@ -279,8 +279,22 @@ exports.deleteRestaurantById = async (req, res) => {
 exports.getAllCategores = async (req, res) => {
   try {
     const categories = await RestaurantModel.aggregate([
-      {$match: {categories: {$ne: null}}},
-      {$group: {_id: '$categories', image: {$first: '$image'}}},
+      { $unwind: "$categories" },
+      // Populate the categories field
+      {
+        $lookup: {
+          from: "categories", // Assuming the name of your categories collection is "categories"
+          localField: "categories",
+          foreignField: "_id",
+          as: "populatedCategory"
+        }
+      },
+      { $unwind: "$populatedCategory" },
+      // Group by category ID to remove duplicates
+      { $group: { _id: "$populatedCategory._id", name: {$first: "$populatedCategory.categoriesName"}, image: { $first: "$populatedCategory.image" } } }
+      // {$unwind: "$categories"}
+      // {$match: {categories: {$ne: null}}},
+      // {$group: {_id: '$categories', image: {$first: '$image'}}},
     ]);
 
     if (!categories) {

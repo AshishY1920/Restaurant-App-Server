@@ -19,6 +19,7 @@ const {
   getSeatsByRestaurants,
   deleteSeatsByObjectId,
 } = require('../Controller/SeatsController');
+const { createCategories } = require('../Controller/CategoriesController');
 const router = express.Router();
 
 // Restaurant Routes
@@ -48,5 +49,8 @@ router.route('/create-seats/:id').post(createSeat);
 router.route('/get-seats/:id').get(getSeatsByRestaurants);
 router.route('/update-seats/:id').delete(deleteSeatsByObjectId);
 // Seats Routes
+
+// Categories Routes
+router.route('/create-categories').post(createCategories)
 
 module.exports = router;
