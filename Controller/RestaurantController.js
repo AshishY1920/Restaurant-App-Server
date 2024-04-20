@@ -49,6 +49,28 @@ exports.createRestaurant = async (req, res) => {
   }
 };
 
+// Get Latest Restaurant
+exports.getLatestRestaurant = async (req, res) => {
+  try {
+    const Restaurant = await RestaurantModel.find({})
+      .sort({createdAt: -1})
+      .limit(5);
+
+    if (!Restaurant) {
+      return res.status(400).json({
+        status: 0,
+        message: 'No Restaurant Found',
+      });
+    }
+
+    return res.status(200).json({
+      status: 1,
+      message: 'Restaurant Retrieved Successfully',
+      data: Restaurant,
+    });
+  } catch (error) {}
+};
+
 // get Restaurant
 exports.getRestaurant = async (req, res) => {
   try {

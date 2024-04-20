@@ -6,6 +6,7 @@ const {
   updateRestaurantById,
   deleteRestaurantById,
   getAllCategores,
+  getLatestRestaurant,
 } = require('../Controller/RestaurantController');
 const {createBooking} = require('../Controller/BookingController');
 const {getAllBookings} = require('../Controller/BookingController');
@@ -27,6 +28,7 @@ router.route('/show-restaurant').get(getRestaurantById);
 router.route('/update-restaurant/:id').put(updateRestaurantById);
 router.route('/delete-restaurant/:id').delete(deleteRestaurantById);
 router.route('/get-categories').get(getAllCategores);
+router.route('/get-latest-restaurant').get(getLatestRestaurant);
 // Restaurant Routes
 
 // Bookings Routes
