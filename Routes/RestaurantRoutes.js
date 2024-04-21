@@ -33,7 +33,9 @@ router.route('/show-restaurant').get(getRestaurantById);
 router.route('/update-restaurant/:id').put(updateRestaurantById);
 router.route('/delete-restaurant/:id').delete(deleteRestaurantById);
 router.route('/get-latest-restaurant').get(getLatestRestaurant);
-router.route('/get-restaurant-categories').get(getRestaurantByCategories);
+router
+  .route('/get-restaurant-categories/:category')
+  .get(getRestaurantByCategories);
 // Restaurant Routes
 
 // Bookings Routes

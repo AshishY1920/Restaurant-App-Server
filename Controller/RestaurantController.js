@@ -281,8 +281,8 @@ exports.getRestaurantByCategories = async (req, res) => {
     const {page, limit} = req.query;
     const Page = parseInt(page) || 1;
     const Limit = parseInt(limit) || 5;
-    const skip = page ? (parseInt(page) - 1) * Islimit : 0;
-    const {category} = req.body;
+    const skip = page ? (parseInt(page) - 1) * Limit : 0;
+    const {category} = req.params;
     if (!category) {
       return res.status(400).json({
         status: 0,
