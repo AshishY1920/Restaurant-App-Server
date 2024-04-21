@@ -5,8 +5,8 @@ const {
   getDashboardCounts,
   updateRestaurantById,
   deleteRestaurantById,
-  getAllCategores,
   getLatestRestaurant,
+  getRestaurantByCategories,
 } = require('../Controller/RestaurantController');
 const {createBooking} = require('../Controller/BookingController');
 const {getAllBookings} = require('../Controller/BookingController');
@@ -19,7 +19,11 @@ const {
   getSeatsByRestaurants,
   deleteSeatsByObjectId,
 } = require('../Controller/SeatsController');
-const { createCategories } = require('../Controller/CategoriesController');
+const {
+  createCategories,
+  getSelectedCategories,
+  getAllCategories,
+} = require('../Controller/CategoriesController');
 const router = express.Router();
 
 // Restaurant Routes
@@ -28,8 +32,8 @@ router.route('/get-restaurant').get(getRestaurant);
 router.route('/show-restaurant').get(getRestaurantById);
 router.route('/update-restaurant/:id').put(updateRestaurantById);
 router.route('/delete-restaurant/:id').delete(deleteRestaurantById);
-router.route('/get-categories').get(getAllCategores);
 router.route('/get-latest-restaurant').get(getLatestRestaurant);
+router.route('/get-restaurant-categories').get(getRestaurantByCategories);
 // Restaurant Routes
 
 // Bookings Routes
@@ -51,6 +55,8 @@ router.route('/update-seats/:id').delete(deleteSeatsByObjectId);
 // Seats Routes
 
 // Categories Routes
-router.route('/create-categories').post(createCategories)
+router.route('/create-categories').post(createCategories);
+router.route('/get-categories').get(getSelectedCategories);
+router.route('/get-all-categories').get(getAllCategories);
 
 module.exports = router;
