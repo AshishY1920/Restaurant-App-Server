@@ -1,4 +1,5 @@
 const CategoryModel = require('../Model/CategoryModel');
+const RestaurantModel = require('../Model/RestaurantModel');
 const {uploadImage} = require('./RestaurantController');
 
 // Create Categories
