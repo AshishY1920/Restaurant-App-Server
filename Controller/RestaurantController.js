@@ -3,6 +3,7 @@ const RestaurantModel = require('../Model/RestaurantModel');
 const moment = require('moment');
 const BookingModel = require('../Model/BookingModel');
 const SeatsModel = require('../Model/SeatsModel');
+const CategoryModel = require('../Model/CategoryModel');
 
 // Image Uploader
 exports.uploadImage = async image => {
@@ -175,6 +176,8 @@ exports.getDashboardCounts = async (req, res) => {
       Bookingdate: todayDate,
     });
 
+    const CategoriesCount = await CategoryModel.countDocuments({});
+
     return res.status(200).json({
       status: 1,
       message: 'Metrics Count Fetched Successfully',
@@ -183,6 +186,7 @@ exports.getDashboardCounts = async (req, res) => {
         total_bookings: AllBookingsCount,
         cancelled_booking: CancelledBookingCounts,
         today_booking: TodaysBookingCounts,
+        total_categories: CategoriesCount,
       },
       chart_counts_restaurant: {
         total_restaurant: restaurantCount,
